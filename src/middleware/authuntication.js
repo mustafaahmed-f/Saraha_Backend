@@ -21,7 +21,11 @@ export const auth = asyncHandler(async (req, res, next) => {
     tokens: { $in: [token] },
   });
   if (!checkTokenExistence)
-    return next(new Error("Token is not related to user !!", { cause: 400 }));
+    return next(
+      new Error("Token is not related to user or user is not found !!", {
+        cause: 400,
+      })
+    );
 
   // console.log(req)
   try {
@@ -31,11 +35,12 @@ export const auth = asyncHandler(async (req, res, next) => {
     }
     const user = await userModel
       .findById(decoded.id)
-      .select("userName email role"); // {}, null
+      .select("userName email _id"); // {}, null
     if (!user) {
       return next(new Error("Not register account", { cause: 401 }));
     }
     req.user = user;
+
     return next();
   } catch (error) {
     // refersh token

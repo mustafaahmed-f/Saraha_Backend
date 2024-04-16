@@ -49,29 +49,32 @@ export const updatePassword = asyncHandler(async (req, res, next) => {
 //============================ update profile =============================
 export const updateProfile = asyncHandler(async (req, res, next) => {
   const { _id } = req.user;
-  const { lastName, firstName, userName } = req.body;
+  const { lastName, firstName } = req.body;
 
-  const checkDublicatedUserName = await userModel.findOne({ userName });
-  if (checkDublicatedUserName) {
-    return next(new Error("userName is already in use !!", { cause: 400 }));
+  const updatedFields = {};
+
+  // Check each field and add it to the updatedFields object if it's not empty
+  if (firstName.trim() !== "") {
+    updatedFields.firstName = firstName;
+  }
+  if (lastName.trim() !== "") {
+    updatedFields.lastName = lastName;
   }
 
-  const updatedUser = await userModel.findByIdAndUpdate(
-    _id,
-    {
-      lastName,
-      firstName,
-      userName,
-    },
-    {
-      new: true,
-    }
-  );
+  const updatedUser = await userModel.findByIdAndUpdate(_id, updatedFields, {
+    new: true,
+  });
 
   if (!updatedUser)
     return next(new Error("Failed to update user", { cause: 500 }));
 
-  return res.status(200).json({ message: "Update done" });
+  return res.status(200).json({
+    message: "Update done",
+    user_Details: {
+      firstName: updatedUser.firstName,
+      lastName: updatedUser.lastName,
+    },
+  });
 });
 
 //============================ delete profile =============================
@@ -102,4 +105,15 @@ export const logOut = asyncHandler(async (req, res, next) => {
 
   if (!logOutUser) return next(new Error("failed to log out", { cause: 500 }));
   return res.status(200).json({ message: "Logged out !!" });
+});
+
+//================================ Log out ===============================
+
+export const checkUserName = asyncHandler(async (req, res, next) => {
+  const { userName } = req.query;
+  const user = await userModel.findOne({ userName });
+  if (!user) {
+    return next(new Error("User not found", { cause: 404 }));
+  }
+  return res.status(200).json({ message: "User found" });
 });

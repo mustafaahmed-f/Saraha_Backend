@@ -1,5 +1,5 @@
 // const { Schema } = require('mongoose')
-import { Schema, model } from "mongoose";
+import { Schema, Types, model } from "mongoose";
 
 const messagesSchema = new Schema(
   {
@@ -7,13 +7,13 @@ const messagesSchema = new Schema(
       type: String,
       required: true,
     },
-    sendTo: {
-      type: Schema.Types.ObjectId,
+    sentTo: {
+      type: String,
       ref: "User",
       required: true,
     },
-    sendBy: {
-      type: Schema.Types.ObjectId,
+    sentBy: {
+      type: Types.ObjectId,
       ref: "User",
     },
   },
@@ -22,4 +22,5 @@ const messagesSchema = new Schema(
   }
 );
 
-export const messageModel = model("Message", messagesSchema);
+const messageModel = model("Message", messagesSchema);
+export default messageModel;

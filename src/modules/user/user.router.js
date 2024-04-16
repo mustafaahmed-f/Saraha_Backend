@@ -8,5 +8,6 @@ router.put("/updateProfile", auth, userController.updateProfile);
 router.delete("/deleteProfile", auth, userController.deleteProfile);
 router.patch("/updatePassword", auth, userController.updatePassword);
 router.patch("/logOut", auth, userController.logOut);
+router.post("/checkUserName", userController.checkUserName);
 
 export default router;
