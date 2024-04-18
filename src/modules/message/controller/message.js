@@ -10,9 +10,16 @@ export const sendMessage = asyncHandler(async (req, res, next) => {
   const { content } = req.body;
   const { sentTo } = req.params;
 
+  console.log(content);
+
   //// we should get sentBy from auth .. if there is an authorization field in the header of the request..
 
-  const modifiedContent = content.substring(0, 999);
+  if (content.length > 1000)
+    return next(
+      new Error("Message shouldn't be more than 1000 characters ", {
+        cause: 400,
+      })
+    );
 
   // usercheck
   const isUserExists = await userModel.findOne({ userName: sentTo });
@@ -21,7 +28,7 @@ export const sendMessage = asyncHandler(async (req, res, next) => {
   }
 
   let newMsgObj = {
-    content: modifiedContent,
+    content,
     sentTo,
   };
 
