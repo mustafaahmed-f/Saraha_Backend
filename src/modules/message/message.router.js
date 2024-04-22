@@ -9,6 +9,7 @@ router.post("/sendMessage/:sentTo", conditionalAuth, mc.sendMessage);
 router.get("/getMessages", auth, mc.getMessages);
 router.get("/getSentMessages", auth, mc.getSentMessages);
 router.get("/numOfMessages", auth, mc.numOfMessages);
+router.get("/numOfSentMessages", auth, mc.numOfSentMessages);
 router.delete("/deleteMessage/:messageId", auth, mc.deleteMessages);
 router.delete("/emptyInbox", auth, mc.emptyInbox);
 

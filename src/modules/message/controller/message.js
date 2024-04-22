@@ -60,7 +60,10 @@ export const getMessages = asyncHandler(async (req, res, next) => {
     .sort()
     .pagination();
 
-  const messages = await apiFeaturesInstance.mongooseQuery;
+  const messages = await apiFeaturesInstance.mongooseQuery.populate({
+    path: "sentBy",
+    select: "userName",
+  });
 
   if (messages.length) {
     return res.status(200).json({ message: "done", messages });
@@ -131,6 +134,23 @@ export const numOfMessages = asyncHandler(async (req, res, next) => {
 
   const messages = await messageModel.countDocuments({
     sentTo: userName,
+  });
+
+  // console.log(messages);
+
+  if (!messages)
+    return next(new Error("Your inbox is already empty", { cause: 400 }));
+
+  return res.status(200).json({ message: "Done", number: messages });
+});
+
+//=========================== Get number of sent messages =======================
+
+export const numOfSentMessages = asyncHandler(async (req, res, next) => {
+  const { _id } = req.user;
+
+  const messages = await messageModel.countDocuments({
+    sentBy: _id,
   });
 
   // console.log(messages);

@@ -18,8 +18,8 @@ export class ApiFeatures {
   }
 
   pagination() {
-    const { page, size } = this.queryObj;
-    const { skip, limit } = paginationFunction({ page, size });
+    const { page } = this.queryObj;
+    const { skip, limit } = paginationFunction({ page });
     this.mongooseQuery.skip(skip).limit(limit);
     return this;
   }

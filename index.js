@@ -3,9 +3,7 @@ dotenv.config();
 
 import bootstrap from "./src/index.router.js";
 import express from "express";
-import { cronOne, cronRe, crontwo } from "./src/utils/crons.js";
-import { gracefulShutdown } from "node-schedule";
-import { faker } from "@faker-js/faker";
+
 import { generateFakeMsg } from "./src/utils/fakeMessages.js";
 
 const app = express();
