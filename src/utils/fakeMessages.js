@@ -3,11 +3,11 @@ import messageModel from "../../DB/model/Message.model.js";
 
 export async function generateFakeMsg() {
   let messages = [];
-  for (let index = 0; index < 10; index++) {
+  for (let index = 0; index < 60; index++) {
     messages.push({
-      sentTo: "mustafaAhmed123456",
-      content: `sentBy mustafa after modification ${faker.word.words(20)}`,
-      sentBy: "65f2dade7340933c4f3e543a",
+      sentTo: "mustafaAhmed97",
+      content: ` ${faker.word.words(20)}`,
+      sentBy: "65fa03b71050d6f10f5df2f6",
     });
   }
 
