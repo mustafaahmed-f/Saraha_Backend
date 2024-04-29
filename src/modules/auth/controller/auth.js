@@ -81,7 +81,7 @@ export const signup = asyncHandler(async (req, res, next) => {
   </tr>
   <tr>
   <td>
-  <a href="http://localhost:5173/login" style="margin:10px 0px 30px 0px;border-radius:4px;padding:10px 20px;border: 0;color:#fff;background-color:#630E2B; ">Login to your account</a>
+  <a href="https://saraha-by-mustafa.netlify.app/login" style="margin:10px 0px 30px 0px;border-radius:4px;padding:10px 20px;border: 0;color:#fff;background-color:#630E2B; ">Login to your account</a>
   </td>
   </tr>
   <br>
